@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static 'users/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'users/css/author.css' %}">
+    {% endblock links %}
+{% block title %}
+Login|Registration   
+{% endblock title %}
+
+{% block main %}
+
+    <div class="container my-5 d-flex justify-content-evenly">
+
+            <div class="card">
+                <div class=" face face1">
+                    <div class="content">
+                        <i class="fal fa-sign-in-alt"></i>
+                    </div>
+                </div>
+                <div class="face face2">
+                    <div class="content">
+                        <a href="{% url 'login' %}">Sign in</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="face face1">
+                    <div class="content">
+                        <i class="fal fa-user-plus"></i>
+                    </div>
+                </div>
+                <div class="face face2">
+                    <div class="content">
+                        <a href="{% url 'register' %}">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+        
+{% endblock main %}

@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'Rubik Black';
+    src: url(../fonts/static/Rubik-Black.ttf);
+}
+@font-face {
+    font-family: 'Rubik Bold';
+    src: url(../fonts/static/Rubik-Bold.ttf);
+}
+@font-face {
+    font-family: 'Rubik ExtraBlack';
+    src: url(../fonts/static/Rubik-ExtraBold.ttf);
+}
+@font-face {
+    font-family: 'Rubik Light';
+    src: url(../fonts/static/Rubik-Light.ttf);
+}
+@font-face {
+    font-family: 'Rubik Medium';
+    src: url(../fonts/static/Rubik-Medium.ttf);
+}
+@font-face {
+    font-family: 'Rubik Regular';
+    src: url(../fonts/static/Rubik-Regular.ttf);
+}
+@font-face {
+    font-family: 'Rubik Semibold';
+    src: url(../fonts/static/Rubik-SemiBold.ttf);
+}
+@font-face {
+    font-family: 'Roboto Black';
+    src: url(../fonts/Roboto/Roboto-Black.ttf);
+}
+@font-face {
+    font-family: 'Roboto Bold';
+    src: url(../fonts/Roboto/Roboto-Bold.ttf);
+}
+@font-face {
+    font-family: 'Roboto Light';
+    src: url(../fonts/Roboto/Roboto-Light.ttf);
+}
+@font-face {
+    font-family: 'Roboto Medium';
+    src: url(../fonts/Roboto/Roboto-Medium.ttf);
+}
+@font-face {
+    font-family: 'Roboto Regular';
+    src: url(../fonts/Roboto/Roboto-Regular.ttf);
+}
+@font-face {
+    font-family: 'Roboto Thin';
+    src: url(../fonts/Roboto/Roboto-Thin.ttf);
+}
