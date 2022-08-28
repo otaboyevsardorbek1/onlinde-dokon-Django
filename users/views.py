@@ -2,7 +2,6 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 
 from django.contrib.auth import authenticate, login, logout
-from regex import P
 
 from .forms import UserLoginForm, UserRegisterForm, UserProfileFrom
 from .models import User

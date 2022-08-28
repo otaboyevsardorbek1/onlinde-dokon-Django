@@ -17,24 +17,24 @@
     <div class="form-toggle"></div>
     <div class="form-panel one">
       <div class="form-header">
-        <h1>Sign In</h1>
+        <h1 class="h5 text-uppercase mb-4">Sign In</h1>
       </div>
       <div class="form-content">
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
           <div class="form-group">
-            <label for="username">Username</label>
+            <label class="text-sm mb-0 text-muted" for="username">Username</label>
             {{form.username}}
           </div>
           <div class="form-group">
-            <label for="password">Password</label>
+            <label class="text-sm mb-0 text-muted" for="password">Password</label>
            {{form.password}}
           </div>
           <div class="form-group">
             <a class="form-recovery" href="register.html">Sign Up</a>
           </div>
-          <div class="form-group">
-            <button type="submit" name="login">Sign in</button>
+          <div class="form-group mt-3">
+            <button class="btn btn-dark" type="submit" name="login">Sign in</button>
           </div>
         </form>
       </div>
