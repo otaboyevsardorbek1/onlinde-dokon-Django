@@ -1,6 +1,7 @@
 
 from django.db import models
 from autoslug import AutoSlugField
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -33,7 +34,7 @@ class ProductImage(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
-    slug = AutoSlugField(populate_from='name')
+    slug = AutoSlugField(populate_from='name', null=True)
     description = models.CharField(max_length=255)
     price = models.PositiveSmallIntegerField(default=0)
     image = models.ImageField(upload_to="product_image/%Y/%m/%d", null=True)
@@ -44,6 +45,14 @@ class Product(models.Model):
         on_delete=models.CASCADE,
         null=True,
     )
+
+    # def get_absolute_url(self):
+    #     return reverse("", kwargs={"pk": self.pk})
+
+    def get_absolute_url_for_basket(self):
+        return reverse("basket_add", kwargs={"slug": self.slug})
+    
+    
     
     # def save(self, *args, **kwargs):
     #     self.slug = slugify(self.title)
@@ -53,13 +62,13 @@ class Product(models.Model):
         return self.name
 
 
-class Basket(models.Model):
-    user = models.ForeignKey(
-        "users.User", related_name="basket_products", on_delete=models.CASCADE
-    )
-    product = models.ForeignKey("store.Product", on_delete=models.CASCADE)
-    quantity = models.PositiveSmallIntegerField()
-    create_at = models.DateTimeField(auto_now_add=True)
+# class Basket(models.Model):
+#     user = models.ForeignKey(
+#         "users.User", related_name="basket_products", on_delete=models.CASCADE
+#     )
+#     product = models.ForeignKey("store.Product", on_delete=models.CASCADE)
+#     quantity = models.PositiveSmallIntegerField()
+#     create_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"{self.user} -- {self.product}"
+#     def __str__(self):
+#         return f"{self.user} -- {self.product}"
