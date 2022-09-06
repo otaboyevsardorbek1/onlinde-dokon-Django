@@ -1,22 +1,27 @@
-<ul class="navbar-nav me-auto">
-    <li class="nav-item">
-        <!-- Link--><a class="nav-link active" href="index.html">Home</a>
-    </li>
-    <li class="nav-item">
-        <!-- Link--><a class="nav-link" href="shop.html">Shop</a>
-    </li>
-    <li class="nav-item">
-        <!-- Link--><a class="nav-link" href="detail.html">Product detail</a>
-    </li>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle"
-           id="pagesDropdown"
-           href="#"
-           data-bs-toggle="dropdown"
-           aria-haspopup="true"
-           aria-expanded="false">Pages</a>
-        <div class="dropdown-menu mt-3 shadow-sm" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item border-0 transition-link" href="index.html">Homepage</a><a class="dropdown-item border-0 transition-link" href="shop.html">Category</a><a class="dropdown-item border-0 transition-link" href="detail.html">Product detail</a><a class="dropdown-item border-0 transition-link" href="cart.html">Shopping cart</a><a class="dropdown-item border-0 transition-link" href="checkout.html">Checkout</a>
-        </div>
-    </li>
-</ul>
+{% load store_tags %}
+
+
+<li class="nav-item">
+    {% url 'home' as home %}
+
+    <!-- Link--><a class="nav-link {% if request.path == home %}active{% endif %}" href="{% url 'home' %}">Home</a>
+</li>
+<li class="nav-item">
+    {% url 'shop' as shop %}
+    <!-- Link--><a class="nav-link {% if request.path == shop %}active{% endif %}" href="{% url 'shop' %}">Shop</a>
+</li>
+<li class="nav-item">
+    {% url 'detail'  as 'detail' %}
+    <!-- Link--><a class="nav-link {% if request.path == 'detail' %}active{% endif %}" href="{% url 'detail' %}">Product detail</a>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">Pages</a>
+    <div class="dropdown-menu mt-3 shadow-sm" aria-labelledby="pagesDropdown">
+        <a class="dropdown-item border-0 transition-link" href="{% url 'home' %}">Homepage</a>
+        <a class="dropdown-item border-0 transition-link" href="{% url 'shop' %}">Category</a>
+        <a class="dropdown-item border-0 transition-link" href="{% url 'detail' %}">Product detail</a>
+        <a class="dropdown-item border-0 transition-link" href="{% url 'cart' %}">Shopping cart</a>
+        <a class="dropdown-item border-0 transition-link" href="checkout.html">Checkout</a>
+    </div>
+</li>

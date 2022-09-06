@@ -1,11 +1,12 @@
 from django.urls import path, include
 
-from .views import home_page_view, basket_add, basket_detail
-
+from .views import home_page_view, shop_page, detail_page, cart_page, checkout_page
+ 
 
 urlpatterns = [
-    path("", home_page_view, name="home"),
-    path("shop/", home_page_view, name="shop"),
-    path("basket/add/<slug:slug>", basket_add, name='basket_add' ),
-    path("basket-detail/", basket_detail, name='basket_detail' )
+     path("", home_page_view, name="home"),
+    path("shop/", shop_page, name="shop"),
+    path("detail/", detail_page, name="detail"),
+    path("cart/", cart_page, name="cart"),
+    path("checkout/", checkout_page, name="checkout"),
 ]

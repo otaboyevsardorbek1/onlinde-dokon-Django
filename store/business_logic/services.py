@@ -54,7 +54,7 @@ class Basket:
             self.basket[str(product.id)]["product"] = product
 
         for item in self.basket.values():
-            item["total_price"] = item["price"] * item["quantity"]
+            item["total_price"] = int(item["price"]) * item["quantity"]
              
             yield item
 

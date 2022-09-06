@@ -1,0 +1,31 @@
+{% load static %}
+
+<tr>
+  <th class="ps-0 py-3 border-light" scope="row">
+    <div class="d-flex align-items-center">
+      <a class="reset-anchor d-block animsition-link" href="detail.html"><img src="{{ product.image.url }}" alt="..." width="70" /></a>
+      <div class="ms-3">
+        <strong class="h6"><a class="reset-anchor animsition-link" href="detail.html">{{ product.title }}</a></strong>
+      </div>
+    </div>
+  </th>
+  <td class="p-3 align-middle border-light">
+    <p class="mb-0 small">${{ product.price }}</p>
+  </td>
+  <td class="p-3 align-middle border-light">
+    <div class="border d-flex align-items-center justify-content-between px-3">
+      <span class="small text-uppercase text-gray headings-font-family">Quantity</span>
+      <div class="quantity">
+        <button class="dec-btn p-0"><i class="fa fa-minus" aria-hidden="true"></i></button>
+        <span class="m-1">{{ item.quantity }}</span>
+        <button class="inc-btn p-0"><i class="fa fa-plus" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </td>
+  <td class="p-3 align-middle border-light">
+    <p class="mb-0 small">${{ item.total_price }}</p>
+  </td>
+  <td class="p-3 align-middle border-light">
+    <a class="reset-anchor" href="#!"><i class="fas fa-trash-alt small text-muted"></i></a>
+  </td>
+</tr>
