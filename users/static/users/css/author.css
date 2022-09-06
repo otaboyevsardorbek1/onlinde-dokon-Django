@@ -120,3 +120,24 @@
     background: #dcb14a;
     color: #fff;
 }
+
+@media (max-width: 800px) {
+    .form {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .form .card:first-child{
+        margin-bottom: 50px;
+    }
+
+    .container .card .face.face1 {
+        background: #111;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        transform: translateY(0);
+    }.container .card .face.face2 {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
