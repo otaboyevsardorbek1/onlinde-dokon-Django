@@ -9,24 +9,35 @@ class Basket:
         self.session = request.session
         basket = self.session.get(BASKET_SESSION)
 
-        if not basket:
+        if not basket and {}:
             self.session[basket] = {}
             basket = self.session[basket]
         self.basket = basket
 
-    def add(
-        self,
-        product: QuerySet,
-        quantity: int = 1
-    ) -> None:
+    def add(self, product: QuerySet, quantity: int = 1) -> None:
         product_id = str(product.id)
 
         if product_id not in self.basket:
-            self.basket[product_id] = {"quantity": quantity, "price": str(product.price)}
+            self.basket[product_id] = {
+                "quantity": quantity,
+                "price": str(product.price),
+            }
         else:
             self.basket[product_id]["quantity"] += quantity
 
         self.save()
+
+    def remove_count(self, product: QuerySet, quantity: int = 1) -> None:
+        product_id = str(product.id)
+
+        if product_id in self.basket:
+            
+            if self.basket[product_id]["quantity"] > 1:
+       
+                self.basket[product_id]["quantity"] -= quantity
+                self.save()
+            else:
+                self.remove(product)
 
     def remove(self, product):
         product_id = str(product.id)
@@ -37,7 +48,7 @@ class Basket:
             self.save()
 
     def clear(self):
-        del self.session[BASKET_SESSION]
+        self.session[BASKET_SESSION] = {}
 
         self.save()
 
@@ -55,11 +66,14 @@ class Basket:
 
         for item in self.basket.values():
             item["total_price"] = int(item["price"]) * item["quantity"]
-             
+
             yield item
 
     def __len__(self) -> int:
-        return sum(item["quantity"] for item in self.basket.values())
+        if self.basket:
+            return sum(item["quantity"] for item in self.basket.values())
+        else:
+            return 0
 
     def get_total_price(self) -> int:
-        return sum(item["price"] for item in self.basket.values())
+        return sum([int(item["price"]) * item["quantity"] for item in self.basket.values()])

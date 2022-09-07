@@ -47,28 +47,19 @@ class Product(models.Model):
     )
 
     # def get_absolute_url(self):
-    #     return reverse("", kwargs={"pk": self.pk})
+    #     return reverse("detail", kwargs={"slug": self.slug})
 
-    def get_absolute_url_for_basket(self):
+    def get_absolute_url_for_add_to_basket(self):
         return reverse("basket_add", kwargs={"slug": self.slug})
+
+    def get_absolute_url_for_remove_from_basket(self):
+        return reverse("basket_remove", kwargs={"slug": self.slug})
     
-    
-    
-    # def save(self, *args, **kwargs):
-    #     self.slug = slugify(self.title)
-    #     super().save(*args, **kwargs)
+    def get_absolute_url_for_remove_count_from_basket(self):
+        return reverse("basket_remove_count", kwargs={"slug": self.slug})
 
     def __str__(self):
         return self.name
 
 
-# class Basket(models.Model):
-#     user = models.ForeignKey(
-#         "users.User", related_name="basket_products", on_delete=models.CASCADE
-#     )
-#     product = models.ForeignKey("store.Product", on_delete=models.CASCADE)
-#     quantity = models.PositiveSmallIntegerField()
-#     create_at = models.DateTimeField(auto_now_add=True)
 
-#     def __str__(self):
-#         return f"{self.user} -- {self.product}"

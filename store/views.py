@@ -26,6 +26,29 @@ def basket_add(request, slug):
 
     return HttpResponseRedirect(current_page)
 
+def basket_remove_count(request, slug):
+    
+    basket = Basket(request)
+
+    current_page = request.META.get("HTTP_REFERER")
+    product = Product.objects.get(slug=slug)
+
+    basket.remove_count(product)
+
+    return HttpResponseRedirect(current_page)
+
+
+def basket_remove(request, slug):
+    
+    basket = Basket(request)
+
+    current_page = request.META.get("HTTP_REFERER")
+    product = Product.objects.get(slug=slug)
+
+    basket.remove(product)
+
+    return HttpResponseRedirect(current_page)
+
 def cart_page(request):
     basket = Basket(request)
     context = {
@@ -34,15 +57,17 @@ def cart_page(request):
 
     return render(request, "store/cart.html", context=context)
 
-def shopping_page_view(request):
-    return render(request, "store/shop.html")
+def shop_page_view(request):
+
+    context = {
+        "products": get_all_products(),
+    }
+
+    return render(request, "store/shop.html", context=context)
 
 
-def shop_page(request):
-    return render(request, "store/shop.html")
 
-
-def detail_page(request):
+def detail_page(request, slug):
     return render(request, "store/detail.html")
 
 

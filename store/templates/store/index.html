@@ -25,7 +25,9 @@
         </header>
         <div class="row">
             <!-- PRODUCT-->
-            {% include "store/components/_product_card.html" %}
+            {% for product in products %}
+                {% include "store/components/_product_card.html" %}
+            {% endfor %}
         </div>
     </section>
     <!-- SERVICES-->

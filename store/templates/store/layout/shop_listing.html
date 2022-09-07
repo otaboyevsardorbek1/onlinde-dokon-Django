@@ -4,7 +4,9 @@
 
   <div class="row">
     <!-- PRODUCT -->
+    {% for product in products %}
     {% include 'store/components/_product_card.html' %}
+    {% endfor %}
   </div>
   <!-- PAGINATION -->
   {% include 'store/components/_pagination.html' %}
