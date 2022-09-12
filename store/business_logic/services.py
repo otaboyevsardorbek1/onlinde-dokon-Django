@@ -14,6 +14,7 @@ class Basket:
             basket = self.session[basket]
         self.basket = basket
 
+
     def add(self, product: QuerySet, quantity: int = 1) -> None:
         product_id = str(product.id)
 
@@ -48,7 +49,7 @@ class Basket:
             self.save()
 
     def clear(self):
-        self.session[BASKET_SESSION] = {}
+        self.basket = {}
 
         self.save()
 
@@ -74,6 +75,14 @@ class Basket:
             return sum(item["quantity"] for item in self.basket.values())
         else:
             return 0
+    def exists(self, product) -> int:
+        product_id = product.id
+        for product in self.basket:
+            if int(product) == product_id:
+                return self.basket[product]["quantity"]
+        return 0
 
     def get_total_price(self) -> int:
         return sum([int(item["price"]) * item["quantity"] for item in self.basket.values()])
+
+

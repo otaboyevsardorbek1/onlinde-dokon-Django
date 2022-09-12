@@ -46,8 +46,8 @@ class Product(models.Model):
         null=True,
     )
 
-    # def get_absolute_url(self):
-    #     return reverse("detail", kwargs={"slug": self.slug})
+    def get_absolute_url(self):
+        return reverse("detail", kwargs={"slug": self.slug})
 
     def get_absolute_url_for_add_to_basket(self):
         return reverse("basket_add", kwargs={"slug": self.slug})

@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -26,7 +27,7 @@ def basket_add(request, slug):
 
     return HttpResponseRedirect(current_page)
 
-def basket_remove_count(request, slug):
+def basket_remove_count(request, slug) -> str:
     
     basket = Basket(request)
 
@@ -36,7 +37,6 @@ def basket_remove_count(request, slug):
     basket.remove_count(product)
 
     return HttpResponseRedirect(current_page)
-
 
 def basket_remove(request, slug):
     
@@ -51,6 +51,7 @@ def basket_remove(request, slug):
 
 def cart_page(request):
     basket = Basket(request)
+    
     context = {
         'basket': basket
     }
@@ -68,7 +69,13 @@ def shop_page_view(request):
 
 
 def detail_page(request, slug):
-    return render(request, "store/detail.html")
+    product = Product.objects.get(slug=slug)
+    basket = Basket(request)
+    context = {
+        "product": product,
+        "quantity": basket.exists(product)
+    }
+    return render(request, "store/detail.html", context=context)
 
 
 def checkout_page(request):
