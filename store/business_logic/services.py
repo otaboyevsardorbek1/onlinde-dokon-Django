@@ -9,7 +9,7 @@ class Basket:
         self.session = request.session
         basket = self.session.get(BASKET_SESSION)
 
-        if not basket and {}:
+        if not basket and not basket == {}:
             self.session[basket] = {}
             basket = self.session[basket]
         self.basket = basket
@@ -17,6 +17,8 @@ class Basket:
 
     def add(self, product: QuerySet, quantity: int = 1) -> None:
         product_id = str(product.id)
+        print(product)
+        print(self.basket)
 
         if product_id not in self.basket:
             self.basket[product_id] = {
