@@ -100,4 +100,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.User"
 
-BASKET_SESSION = 'basket'
+BASKET_SESSION = "basket"
+
+STRIPE_PUBLISH_KEY = "pk_test_51Knhl7Em3EW9QQsQUPh0y8bSBdeWp3hgAYy8VdtJIlIQOkxVpZ5KieaWr3GRrZdvaX3lEtHDQRqPpghW6n3ccmTq001LyLYB4k"
+
+STRIPE_SECRET_KEY = "sk_test_51Knhl7Em3EW9QQsQ5CKzgtA4zElUcixAOsxQ0xWbxUwAzdD6TJGlNfzDRHcxcBaPfDmVfLu15YvxGMbykMrn4nSS006MZObmg1"

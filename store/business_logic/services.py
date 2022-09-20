@@ -1,5 +1,7 @@
-from shop.settings import BASKET_SESSION
+from shop.settings import BASKET_SESSION, STRIPE_SECRET_KEY
 from store.models import Product
+
+import stripe
 
 from django.db.models.query import QuerySet
 
@@ -13,7 +15,6 @@ class Basket:
             self.session[basket] = {}
             basket = self.session[basket]
         self.basket = basket
-
 
     def add(self, product: QuerySet, quantity: int = 1) -> None:
         product_id = str(product.id)
@@ -34,9 +35,9 @@ class Basket:
         product_id = str(product.id)
 
         if product_id in self.basket:
-            
+
             if self.basket[product_id]["quantity"] > 1:
-       
+
                 self.basket[product_id]["quantity"] -= quantity
                 self.save()
             else:
@@ -77,6 +78,7 @@ class Basket:
             return sum(item["quantity"] for item in self.basket.values())
         else:
             return 0
+
     def exists(self, product) -> int:
         product_id = product.id
         for product in self.basket:
@@ -85,6 +87,48 @@ class Basket:
         return 0
 
     def get_total_price(self) -> int:
-        return sum([int(item["price"]) * item["quantity"] for item in self.basket.values()])
+        return sum(
+            [int(item["price"]) * item["quantity"] for item in self.basket.values()]
+        )
 
+
+class StripeService:
+    def __init__(self) -> None:
+        self.stripe = stripe
+        self.stripe.api_key = STRIPE_SECRET_KEY
+
+    def generate_product_card(self, products):
+        product_items = []
+        for product in products:
+            product_items.append(
+                {
+                    "price_data": {
+                        "currency": "usd",
+                        "product_data": {
+                            "name": product.name,
+                            "description": product.description,
+                        },
+                        "unit_amount": product.price * 100,
+                    },
+                    "quantity": product["quantity"],
+                },
+            )
+        return product_items
+
+    def checkout(self, request, products):
+
+        session = self.stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=self.generate_product_card(products=products),
+            mode="payment",
+            success_url="",
+            cancel_url=""
+        )
+    
+    def get_detail_by_session_id(self, session_id):
+        data =  self.stripe.checkout.Session.retrieve(session_id)
+        name = data["customer_details"]["name"]
+        email = data["customer_deatils"]["email"]
+
+        return name, email
 

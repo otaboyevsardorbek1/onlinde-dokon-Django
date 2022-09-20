@@ -1,4 +1,3 @@
-
 from django.db import models
 from autoslug import AutoSlugField
 from django.urls import reverse
@@ -39,6 +38,7 @@ class Product(models.Model):
     price = models.PositiveSmallIntegerField(default=0)
     image = models.ImageField(upload_to="product_image/%Y/%m/%d", null=True)
     quantity = models.PositiveSmallIntegerField()
+    
     subcategory = models.ForeignKey(
         "store.SubCategory",
         related_name="products",
@@ -63,3 +63,15 @@ class Product(models.Model):
 
 
 
+class Order(models.Model):
+    ordered_by = models.ForeignKey("users.User", on_delete=models.PROTECT, related_name='orders', blank=True)
+    full_name = models.CharField(max_length=120)
+    email = models.EmailField()
+    total_price = models.PositiveIntegerField()
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey('store.Order', on_delete=models.PROTECT, related_name='items')
+    product = models.ForeignKey("store.Product", on_delete=models.PROTECT, related_name="items")
+    quantity = models.PositiveSmallIntegerField()
+    total_price = models.PositiveIntegerField()
