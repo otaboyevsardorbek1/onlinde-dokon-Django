@@ -10,9 +10,13 @@ class CategoryAdmin(admin.ModelAdmin):
 class SubCategoryAdmin(admin.ModelAdmin):
     list_display = ["id", "name", 'category']
 
+class PostImageAdmin(admin.StackedInline):
+    model = ProductImage
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ["id", "name", "slug",'price', 'quantity', 'subcategory']
+    inlines = [PostImageAdmin]
 
 @admin.register(ProductImage)
 class ProductImageyAdmin(admin.ModelAdmin):
