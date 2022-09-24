@@ -51,6 +51,9 @@
             {% include "layout/footer.html" %}
 
             <!-- JavaScript files-->
+            <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
             <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
             <script src="{% static 'vendor/nouislider/nouislider.min.js' %}"></script>
@@ -58,6 +61,28 @@
             <script src="{% static 'vendor/choices.js/public/assets/scripts/choices.min.js' %}"></script>
             <script src="{% static 'js/front.js' %}"></script>
             <script>
+                  
+                  $( ".product-detail" ).click(function() {
+                      
+                       $.ajax({
+                        type: "GET",
+                        url: "http://127.0.0.1:8000" + $(this).attr("src"),
+                        success: function(response) {
+                               $('.modal').find('h2').text(response.product_name)
+                               $('.modal').find('.text-sm').text(response.product_description)
+                               $('.modal').find('.text-muted').text("$"+response.product_price)
+                               $('.modal').find('.glightbox').attr("href", response.product_url)
+                               $('.modal').find('.glightbox').attr("style", `background: url(${response.product_image})`)
+                               $('.modal').find('.quantity-count').text(response.quantity)
+                               $('.modal').find('.plus').attr("href", response.product_add)
+                               $('.modal').find('.minus').attr("href", response.product_minus)
+
+                               
+                         }
+           
+                   });
+                 
+                      });
                   // ------------------------------------------------------- //
                   //   Inject SVG Sprite - 
                   //   see more here 
@@ -79,7 +104,7 @@
                   // inject local SVG sprite (using only 'icons/orion-svg-sprite.svg' path)
                   // while using file:// protocol
                   // pls don't forget to change to your domain :)
-                  injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg');
+                  {% comment %} injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg'); {% endcomment %}
             
             </script>
             <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
