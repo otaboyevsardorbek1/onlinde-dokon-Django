@@ -72,7 +72,6 @@ class Order(models.Model):
     email = models.EmailField()
     total_price = models.PositiveIntegerField()
 
-
 class OrderItem(models.Model):
     order = models.ForeignKey('store.Order', on_delete=models.PROTECT, related_name='items')
     product = models.ForeignKey("store.Product", on_delete=models.PROTECT, related_name="items")

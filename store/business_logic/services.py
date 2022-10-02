@@ -4,7 +4,7 @@ from store.models import Product
 import stripe
 
 from django.db.models.query import QuerySet
-
+from django.urls import reverse
 
 class Basket:
     def __init__(self, request) -> None:
@@ -105,10 +105,10 @@ class StripeService:
                     "price_data": {
                         "currency": "usd",
                         "product_data": {
-                            "name": product.name,
-                            "description": product.description,
+                            "name": product["product"].name,
+                            "description": product["product"].description,
                         },
-                        "unit_amount": product.price * 100,
+                        "unit_amount": product["product"].price * 100,
                     },
                     "quantity": product["quantity"],
                 },
@@ -121,9 +121,11 @@ class StripeService:
             payment_method_types=["card"],
             line_items=self.generate_product_card(products=products),
             mode="payment",
-            success_url="",
-            cancel_url=""
+            success_url=request.build_absolute_uri(reverse('home')+"?session_id={CHECKOUT_SESSION_ID}"),
+            cancel_url=request.build_absolute_uri(reverse("cart"))
         )
+
+        return session.id
     
     def get_detail_by_session_id(self, session_id):
         data =  self.stripe.checkout.Session.retrieve(session_id)

@@ -1,11 +1,13 @@
 import json
 
-from django.http import HttpResponseRedirect, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 
 from store.business_logic.selectors import get_all_category, get_all_products
-from store.business_logic.services import Basket
+from store.business_logic.services import Basket, StripeService
 from store.models import  Product
+from shop.settings import STRIPE_PUBLISH_KEY
 
 
 def home_page_view(request):
@@ -54,7 +56,8 @@ def cart_page(request):
     basket = Basket(request)
     
     context = {
-        'basket': basket
+        'basket': basket,
+        'stripe_publishable_key': STRIPE_PUBLISH_KEY
     }
 
     return render(request, "store/cart.html", context=context)
@@ -94,6 +97,10 @@ def detail_window(request, slug):
     }
     return HttpResponse(json.dumps(context), content_type="application/json")
 
-
+@csrf_exempt
 def checkout_page(request):
-    return render(request, "store/checkout.html")
+    products = Basket(request)
+    stripe_service = StripeService()
+    session_id = stripe_service.checkout(request=request, products=products)
+
+    return JsonResponse({"id": session_id})
